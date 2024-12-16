@@ -1,0 +1,11 @@
+.App {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  background-color: #fafafa;
+  padding: 20px;
+}
+
+.profile {
+  display: flex;
+  justify-content: center;
+}
