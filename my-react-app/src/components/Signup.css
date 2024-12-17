@@ -1,0 +1,80 @@
+.signup-container {
+    max-width: 350px;
+    margin: 50px auto;
+    padding: 40px 30px;
+    background-color: #ffffff;
+    border: 1px solid #dbdbdb;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+.instagram-logo {
+    display: block;
+    margin: 0 auto 20px; 
+    width: 175px;
+    height: auto; 
+}
+  
+h2 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+  
+.input-group {
+    margin-bottom: 15px;
+    width: 100%;
+}
+  
+.input-field {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    outline: none;
+    box-sizing: border-box;
+}
+  
+.error {
+    color: #ed4956;
+    font-size: 12px;
+    text-align: left;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+  
+.signup-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #0095f6;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+    text-transform: uppercase;
+}
+  
+.signup-btn:hover {
+    background-color: #007bb5;
+}
+
+.back-to-login {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #262626;
+}
+
+.login-link {
+    color: #0095f6;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}

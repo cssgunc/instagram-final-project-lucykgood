@@ -15,6 +15,7 @@
 .sidebar-logo img {
     width: 100px;
     margin-bottom: 20px;
+    cursor: pointer;
 }
 
 .sidebar-links {
@@ -23,7 +24,7 @@
     width: 100%;
 }
 
-.sidebar-links a {
+.sidebar-link {
     text-decoration: none;
     color: #262626;
     padding: 15px 0;
@@ -35,10 +36,36 @@
     padding-left: 20px;
 }
 
-.sidebar-links a:hover {
+.sidebar-link:hover {
     background-color: #f0f0f0;
 }
-  
-  .sidebar-links a svg {
+
+.sidebar-link.active {
+    color: #0095f6;
+    font-weight: bold;
+    background-color: #e6f3fe;
+}
+
+.sidebar-link svg {
     margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 60px;
+        padding: 10px 0;
+    }
+
+    .sidebar-logo img {
+        width: 50px; 
+    }
+
+    .sidebar-link {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .sidebar-link svg {
+        margin-right: 5px;
+    }
 }

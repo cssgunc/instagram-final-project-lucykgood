@@ -9,3 +9,29 @@
   display: flex;
   justify-content: center;
 }
+
+.auth-page {
+  padding: 0;
+  margin-left: 0;
+}
+
+.auth-page .sidebar {
+  display: none;
+}
+
+.main-content {
+  padding: 20px;
+  margin-left: 175px;
+  flex-grow: 1;
+}
+
+.auth-page .main-content {
+  margin-left: 0; 
+}
+
+@media (max-width: 600px) {
+  .main-content {
+    margin-left: 0;
+    padding: 15px;
+  }
+}

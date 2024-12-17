@@ -14,33 +14,33 @@ This project is a functional (backend and frontend) clone of Instagram web! 🤓
 ## Deliverables
 _Put Xs in the boxes as you complete them in order to mark them off!_ 
 
-- [ ] Include a navigation bar at the top of your page
-- [ ] Inclued a footer at the bottom of your page
-- [ ] Include the Instagram logo in the upper left of your website
-- [ ] FOUR (4) PAGES:
-  - [ ] PROFILE PAGE
-    - [ ] Pulls up the profile information of the currently logged in user
-    - [ ] Include a profile picture and bio
-    - [ ] Include information about you in your bio
+- [X] Include a navigation bar at the top of your page
+- [X] Inclued a footer at the bottom of your page
+- [X] Include the Instagram logo in the upper left of your website
+- [X] FOUR (4) PAGES:
+  - [X] PROFILE PAGE
+    - [X] Pulls up the profile information of the currently logged in user
+    - [X] Include a profile picture and bio
+    - [X] Include information about you in your bio
     - [ ] The option to make posts 
-    - [ ] Have a post open up when you click on it, just like on the real Instagram web (**HINT** Use React components here and pass props!!)
-    - [ ] Have the follow button work! Followers should increase/decrease when you click on the follow button! The button should also change in text and color.
-  - [ ] SIGN UP PAGE
-    - [ ] Allows user to input their information and create an account; fields for:
-      - [ ] First name
-      - [ ] Last name
-      - [ ] User handle
-      - [ ] Password 
-  - [ ] LOGIN PAGE
-      - [ ] Allows user to enter password and username to log in
-  - [ ] FEED
-    - [ ] Display posts of those that the user is following
-- [ ] Mimic the styling of the Instagram web page as closely as possible!!!!!!!!!!!!!!!!!!!
+    - [X] Have a post open up when you click on it, just like on the real Instagram web (**HINT** Use React components here and pass props!!)
+    - [X] Have the follow button work! Followers should increase/decrease when you click on the follow button! The button should also change in text and color.
+  - [X] SIGN UP PAGE
+    - [X] Allows user to input their information and create an account; fields for:
+      - [X] First name
+      - [X] Last name
+      - [X] User handle
+      - [X] Password 
+  - [X] LOGIN PAGE
+      - [X] Allows user to enter password and username to log in
+  - [X] FEED
+    - [X] Display posts of those that the user is following
+- [X] Mimic the styling of the Instagram web page as closely as possible!!!!!!!!!!!!!!!!!!!
 
 **Stretch Goals**
 _Not required, but encouraged!_
-- [ ] Make it so that users can only visit the profile page & feed if they are logged in AND can only visit the login & sign up pages if they are NOT logged in
-- [ ] Allow users to like other posts
+- [X] Make it so that users can only visit the profile page & feed if they are logged in AND can only visit the login & sign up pages if they are NOT logged in
+- [X] Allow users to like other posts
 - [ ] SUPER CHALLENGING: Allow users to make comments on posts
 
 ## Directions

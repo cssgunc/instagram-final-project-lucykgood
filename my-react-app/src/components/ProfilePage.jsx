@@ -1,87 +1,140 @@
-import React, { useState } from 'react';
-import Sidebar from './Sidebar';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import supabase from './supabaseClient';
 import './ProfilePage.css';
 import Post from './Post';
 import Modal from './Modal';
-import post1 from '../images/1mom.jpeg';
-import post2 from '../images/2beach.jpeg';
-import post3 from '../images/3jumping.jpeg';
-import post4 from '../images/4flowers.jpeg';
-import post5 from '../images/5friends.jpeg';
-import post6 from '../images/6sunset.jpeg';
-import post7 from '../images/7reese.jpeg';
-import post8 from '../images/8boots.jpeg';
-import post9 from '../images/9dodgers.jpeg';
-import pfp from '../images/pfp.jpeg';
+import emptyPfp from '../images/emptypfp.jpeg';
 
 function ProfilePage() {
-    const [followers, setFollowers] = useState(1682);
-    const [isFollowing, setIsFollowing] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedPost, setSelectedPost] = useState(null);
+  const [userProfile, setUserProfile] = useState(null);
+  const [userPosts, setUserPosts] = useState([]);
+  const [followers, setFollowers] = useState(0);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPost, setSelectedPost] = useState(null);
 
-    const posts = [
-        { id: 1, imageUrl: post1, description: 'things are going steady!!', likes: 474, comments: 61 },
-        { id: 2, imageUrl: post2, description: 'beach!', likes: 12, comments: 0 },
-        { id: 3, imageUrl: post3, description: 'yay!', likes: 18, comments: 0 },
-        { id: 4, imageUrl: post4, description: 'some flowers for your morning.', likes: 7, comments: 0 },
-        { id: 5, imageUrl: post5, description: 'from the country to the coast!', likes: 394, comments: 57 },
-        { id: 6, imageUrl: post6, description: 'reason #2!', likes: 343, comments: 21 },
-        { id: 7, imageUrl: post7, description: 'reason #1 for a chattanooga summer!', likes: 463, comments: 57 },
-        { id: 8, imageUrl: post8, description: 'so chatt!', likes: 14, comments: 1 },
-        { id: 9, imageUrl: post9, description: 'thanks for the tour!', likes: 456, comments: 56 },
-    ];
+  const navigate = useNavigate();
 
-    const toggleFollow = () => {
-        setFollowers(isFollowing ? followers - 1 : followers + 1);
-        setIsFollowing(!isFollowing);
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const userId = localStorage.getItem('user_id');
+      if (!userId) {
+        navigate('/login');
+        return;
+      }
+
+      try {
+        const { data: profileData, error: profileError } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', userId)
+          .single();
+
+        if (profileError || !profileData) {
+          console.error('Error fetching profile:', profileError?.message || 'No profile found');
+          setUserProfile (null);
+          return;
+        }
+
+        setUserProfile({
+          ...profileData,
+          profile_pic: profileData.profile_pic || emptyPfp,
+          user_bio: profileData.user_bio || 'Insert bio here!',
+        });
+        setFollowers(profileData.followers || 0);
+
+        const { data: postsData, error: postsError } = await supabase
+          .from('posts')
+          .select('*')
+          .eq('user_id', userId)
+          .order('created_at', { ascending: false });
+
+        if (postsError) {
+          console.error('Error fetching posts:', postsError.message);
+        } else {
+            console.log('Posts data:', postsData);
+            setUserPosts(postsData.reverse() || []);
+        }
+      } catch (error) {
+        console.error('Unexpected error:', error.message);
+      }
     };
 
-    const openModal = (post) => {
-        setSelectedPost(post);
-        setIsModalOpen(true);
-    };
+    fetchUserData();
+  }, [navigate]);
 
-    const closeModal = () => {
-        setSelectedPost(null);
-        setIsModalOpen(false);
-    };
+  const toggleFollow = () => {
+    setFollowers(isFollowing ? followers - 1 : followers + 1);
+    setIsFollowing(!isFollowing);
+  };
 
+  const openModal = (post) => {
+    setSelectedPost(post);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedPost(null);
+    setIsModalOpen(false);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('user_id');
+    navigate('/login');
+  };
+
+  if (!userProfile) {
     return (
-        <>
-            <div className='profile-page'>
-                <Sidebar />
-                <div className='main-content'>
-                    <div className='profile-header'>
-                        <img src={pfp} alt='Profile' className='profile-pic' />
-                        <div className='profile-info'>
-                            <h2>@lucykgood_</h2>
-                            <div className='profile-stats'>
-                                <p>9 posts {followers} followers 1308 following</p>
-                            </div>
-                            <div className='profile-name'>
-                                <p>Lucy Good</p>
-                            </div>
-                            <div className='profile-bio'>
-                                <p>chatt // @unckappadelta // @ylcedarridge</p>
-                            </div> 
-                            <button className={`follow-button ${isFollowing ? 'following' : ''}`} onClick={toggleFollow}>
-                                {isFollowing ? 'Unfollow' : 'Follow'}
-                            </button>
-                        </div>
-                    </div>
-                    <div className='posts'>
-                        {posts.map(post => (
-                            <div key={post.id} onClick={() => openModal(post)}>
-                                <Post post={post} />
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-            {isModalOpen && <Modal closeModal={closeModal} post={selectedPost} />}
-        </>
+      <div className='empty-profile'>
+        <h2>Welcome to Instagram</h2>
+        <p>Your profile is currently empty. Start by creating your first post.</p>
+        <button className='logout-button' onClick={handleLogout}>Log Out</button>
+      </div>
     );
+  }
+
+  return (
+    <>
+      <div className="profile-page">
+        <div className="main-content">
+          <div className="profile-header">
+            <img src={userProfile?.profile_pic} alt="Profile" className="profile-pic" />
+            <div className="profile-info">
+              <div className="username-stats">
+                <h2 className="username">{userProfile.user_handle}</h2>
+                <button className={`follow-button ${isFollowing ? 'following' : ''}`} onClick={toggleFollow}>
+                  {isFollowing ? 'Unfollow' : 'Follow'}
+                </button>
+                <button className="logout-button" onClick={handleLogout}>Log Out</button>
+              </div>
+              <div className="follow-stats">
+                <p><strong>{userPosts.length}</strong> posts</p>
+                <p><strong>{followers}</strong> followers</p>
+                <p><strong>{userProfile.following || 0}</strong> following</p>
+              </div>
+              <div className="profile-bio">
+                <p><strong>{userProfile.first_name} {userProfile.last_name}</strong></p>
+                <p>{userProfile.user_bio}</p>
+              </div>
+            </div>
+          </div>
+          <div className="posts">
+            {userPosts.length > 0 ? (
+              userPosts.map(post => (
+                <div key={post.id} onClick={() => openModal(post)}>
+                  <Post post={post} />
+                </div>
+              ))
+            ) : (
+              <p className="no-posts">No posts yet. Start sharing your moments!</p>
+            )}
+          </div>
+        </div>
+      </div>
+      {isModalOpen && <Modal closeModal={closeModal} post={selectedPost} />}
+    </>
+  );
 }
 
 export default ProfilePage;
